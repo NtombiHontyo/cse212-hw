@@ -5,30 +5,50 @@
 public class CustomerService {
     public static void Run() {
         // Example code to see what's in the customer service queue:
-        // var cs = new CustomerService(10);
-        // Console.WriteLine(cs);
-
+        
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Tying to add  customer when the capacity is full
+        // Expected Result: An message should be raised when the capacity is full
         Console.WriteLine("Test 1");
-
+        var cs = new CustomerService(3);
+        Console.WriteLine(cs);
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        
+        
+        Console.WriteLine(cs._queue.Count);
+        Console.WriteLine(cs);
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
+        // Scenario: Trying to dequeue a customer from an empty line
         // Expected Result: 
         Console.WriteLine("Test 2");
-
+        
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
+        cs.ServeCustomer();
+        cs.ServeCustomer();
+        try {
+            cs.ServeCustomer();
+            Console.WriteLine("I don't wanna see this line_________");
+        }
+        catch (IndexOutOfRangeException){
+            Console.WriteLine("I got the exception I expected.");
+        }
+        
+        Console.WriteLine(cs._queue.Count);
+        Console.WriteLine(cs);
 
         // Add more Test Cases As Needed Below
+
+
+
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +87,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,9 +108,13 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
+        if (_queue.Count <= 0) 
+        throw new IndexOutOfRangeException();
+
+
         _queue.RemoveAt(0);
-        var customer = _queue[0];
-        Console.WriteLine(customer);
+        // var customer = _queue[0];
+        // Console.WriteLine(customer);
     }
 
     /// <summary>
