@@ -24,6 +24,7 @@ public class TakingTurnsQueueTests
         players.AddPerson(bob.Name, bob.Turns);
         players.AddPerson(tim.Name, tim.Turns);
         players.AddPerson(sue.Name, sue.Turns);
+        //The results come from the person returned from the GetNextPerson() method. This loop will run until all the people in the queue are dequeued.
 
         int i = 0;
         while (players.Length > 0)
@@ -101,6 +102,8 @@ public class TakingTurnsQueueTests
         players.AddPerson(tim.Name, tim.Turns);
         players.AddPerson(sue.Name, sue.Turns);
 
+        //This iterates 10 times. The returns from the GetNext function are stored and compared with the expected results. If the match than the 
+        //test will have passed.
         for (int i = 0; i < 10; i++)
         {
             var person = players.GetNextPerson();
