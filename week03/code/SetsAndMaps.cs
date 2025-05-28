@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Diagnostics;
 
 public static class SetsAndMaps
 {
@@ -22,7 +23,23 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var onePairOfPairs = new HashSet<string>();
+        List<string> wordList = new List<string>();
+        foreach (var word in words)
+        {
+            string reversed = new string(word.Reverse().ToArray());
+             if (onePairOfPairs.Contains(reversed))
+             {
+                 var entry = $"{word} & {reversed}";
+                 wordList.Add(entry);
+             }
+             onePairOfPairs.Add(word);
+
+            
+        }
+        string[] wordArray = wordList.ToArray();
+        Debug.WriteLine(wordArray.Length);
+        return wordArray;
     }
 
     /// <summary>
@@ -42,7 +59,16 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
+            var degreeType = fields[3];
+            if (degrees.ContainsKey(degreeType))
+                degrees[degreeType] += 1;
+            else
+                degrees[degreeType] = 1;
             // TODO Problem 2 - ADD YOUR CODE HERE
+        }
+        foreach (var degreeSummary in degrees)
+        {
+            Debug.WriteLine(degreeSummary);
         }
 
         return degrees;
@@ -67,7 +93,30 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        //Create a dictionary for Word1 Letters
+        var Word1Dict = new Dictionary<int, char>();
+        var Word2Dict = new Dictionary<int, char>();
+       for (int i = 0; i < word1.Length; i++)
+       {
+            Word1Dict[i] = word1[i];
+       }
+       for (int i = 0; i < word2.Length; i++)
+       {
+            Word2Dict[i] = word2[i];
+       }
+       foreach (var letter in word2)
+       {
+            if (Word1Dict.ContainsValue(letter))
+            {
+                
+            }
+       }
+       
+       
+        
+
+        bool isAnagram = word1.Length == word2.Length && !Word1Dict.Except(Word2Dict).Any();
+        return isAnagram;
     }
 
     /// <summary>

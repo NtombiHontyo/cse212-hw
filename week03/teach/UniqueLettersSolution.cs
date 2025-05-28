@@ -26,6 +26,7 @@
         foreach (var letter in text)
         {
             // Look in set to see if letter was seen before
+        
             if (found.Contains(letter))
                 return false;
             // Otherwise we will add it to the set and move on

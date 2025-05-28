@@ -23,6 +23,7 @@ public class DuplicateCounter
         Console.WriteLine($"Number of items in the collection: {data.Length}");
         Console.WriteLine($"Number of duplicates : {CountDuplicates(data)}");
     }
+    
 
     private static int CountDuplicates(int[] data)
     {
@@ -30,7 +31,7 @@ public class DuplicateCounter
 
         myHashSet.UnionWith(data);
         var diffarence = data.Length - myHashSet.Count;
-        
+
         // Add code here.
         return diffarence;
     }
