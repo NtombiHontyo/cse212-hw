@@ -94,29 +94,50 @@ public static class SetsAndMaps
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
         //Create a dictionary for Word1 Letters
-        var Word1Dict = new Dictionary<int, char>();
-        var Word2Dict = new Dictionary<int, char>();
-       for (int i = 0; i < word1.Length; i++)
-       {
-            Word1Dict[i] = word1[i];
-       }
-       for (int i = 0; i < word2.Length; i++)
-       {
-            Word2Dict[i] = word2[i];
-       }
-       foreach (var letter in word2)
-       {
-            if (Word1Dict.ContainsValue(letter))
+        word1 = word1.ToLower().Replace(" ","");
+        word2 = word2.ToLower().Replace(" ","");
+        
+        if (word1.Length == word2.Length)
+        {
+
+            var wordOneDict = new Dictionary<char, int>();
+            foreach (var letter in word1)
             {
                 
+                if (wordOneDict.ContainsKey(letter))
+                {
+                    wordOneDict[letter] += 1;
+                }
+                else
+                {
+                    wordOneDict[letter] = 1;
+                }
             }
-       }
+            foreach (var letter in word2)
+            {
+                if (wordOneDict.ContainsKey(letter))
+                {
+                    wordOneDict[letter] -= 1;
+                }
+            }
+            foreach (var entry in wordOneDict)
+            {
+                if (entry.Value == 0)
+                {
+                    wordOneDict.Remove(entry.Key);
+                }
+            }
+            if (wordOneDict.Count != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
        
-       
-        
-
-        bool isAnagram = word1.Length == word2.Length && !Word1Dict.Except(Word2Dict).Any();
-        return isAnagram;
     }
 
     /// <summary>
