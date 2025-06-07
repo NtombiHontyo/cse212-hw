@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
+using System.Linq;
 
 public static class Recursion
 {
@@ -149,7 +150,36 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
+        var target = '*';
+        var indexOfTarget = pattern.IndexOf(target);
         // TODO Start Problem 4
+        if (!pattern.Contains(target))
+        {
+            results.Add(pattern);
+             foreach (var item in results)
+            {
+                Debug.WriteLine(item);
+            }
+
+        }
+        else
+        {
+            var middle = pattern.Length / 2;
+            if (indexOfTarget == pattern[middle])
+            {
+                //Where the magic happens!
+                pattern = pattern.Replace(target, '1');
+                _ = pattern.Replace(target, '0');
+            }
+            else if (indexOfTarget < pattern[middle])
+            {
+                WildcardBinary(pattern[..middle], results);
+            }
+            else if (indexOfTarget > pattern[middle])
+            {
+                WildcardBinary(pattern[middle..], results);
+            }
+        }
     }
 
     /// <summary>
